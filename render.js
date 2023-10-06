@@ -1,6 +1,6 @@
 import { appComment, appFormElement  } from "./ui.js";
 import { initLikeComments, initReplyComment, deleteComment } from "./renderComments.js";
-
+import { formatDateToRu, formatDateToUs } from "./lib/formatDate/formatDate.js"
 
 
 
@@ -10,13 +10,11 @@ export { renderComments, renderForms };
     function renderComments({ comments }) {  
       const commentsHTML = comments
           .map((comment, ind) => {
-          let currentTime = new Date(comment.date);
-          let commentTime = `${currentTime.toLocaleDateString('ru-Ru', { day: "2-digit", month: "2-digit", year: "2-digit" })} ${currentTime.toLocaleTimeString('ru-Ru', { hour: "2-digit", minute: "2-digit" })}`;
           return `
               <li data-index="${comment.id}" class="comment">
                   <div class="comment-header">
                       <div>${comment.author.name} (${comment.author.login})</div>
-                      <div>${commentTime}</div>
+                      <div>${formatDateToRu(new Date(task.created_at))} </div>
                   </div>
                   <div class="comment-body">
                       <div class="comment-text">

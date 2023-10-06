@@ -4,6 +4,7 @@ import { appComment } from "./ui.js";
 import { fetchAndRenderComments } from "./main.js";
 
 
+
 function initLikeComments ({ comments }) {       
     
     const listLikeButtons = document.querySelectorAll('.like-button');
