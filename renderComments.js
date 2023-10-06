@@ -67,7 +67,7 @@ function checkInput ({ buttonElement, nameElement, textElement }) {
     })
 }
 
-function addComment ({ buttonElement, addFormElement, addFormProgressElement, nameElement, textElement, comments, fetchAndRenderComments }) {
+function addComment ({ buttonElement, addFormElement, addFormProgressElement, nameElement, textElement, comments, fetchAndRenderComments, userName, userLogin }) {
     let buttonCheck = false;  
     let enterCheck = false;   
     function handleAddButtons() {          
@@ -78,10 +78,12 @@ function addComment ({ buttonElement, addFormElement, addFormProgressElement, na
         }
       addFormElement.style.display = 'none';
       addFormProgressElement.style.display = 'block'
+      let userName = document.getElementById("userNameInput");
+      let userLogin = document.getElementById ("enter-form-name");
         
           function postComment() {
           postApi ({
-              name: nameElement.value,
+              name: userName, userLogin,
               text: textElement.value,
           })
           .then((responseData) => {
