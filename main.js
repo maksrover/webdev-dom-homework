@@ -42,4 +42,3 @@ function globalAdd() {
 }
 
 export { fetchAndRenderComments, globalAdd };
-
