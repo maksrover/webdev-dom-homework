@@ -3,6 +3,7 @@ import { initLikeComments, initReplyComment, deleteComment } from "./renderComme
 
 
 
+
 export { renderComments, renderForms };
 
 
@@ -43,17 +44,16 @@ export { renderComments, renderForms };
     
     }
 
-    function renderForms() {         
-        appFormElement.innerHTML = `
+    function renderForms(userName, userLogin) {
+      appFormElement.innerHTML = `
         <div class="add-form">
-          <input type="text" class="add-form-name"> 
-          <textarea type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
+          <input type="text" readonly class="add-form-name" id="userNameInput" value="${userLogin ? `${userLogin} (${userName})` : ''}">
+          <textarea type="textarea" class="add-form-text" placeholder="Введите ваш комментарий" rows="4"></textarea>
           <div class="add-form-row">
             <button class="add-form-button">Написать</button>
           </div>
         </div>
         <div class="add-form-progress">
-        <p>Ваш комментарий добавляется...</p>
+          <p>Ваш комментарий добавляется...</p>
         </div>`;
- 
-  }
+    }
