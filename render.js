@@ -62,3 +62,4 @@ function renderComments({ comments }) {
           <p>Ваш комментарий добавляется...</p>
         </div>`;
 
+    }
