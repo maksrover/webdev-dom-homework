@@ -5,6 +5,7 @@ import { formatSwedishDate } from "./lib/formatDate/formatDate.js";
 
 
 
+
 export { renderComments, renderForms };
 
 
@@ -63,4 +64,4 @@ function renderComments({ comments }) {
         <div class="add-form-progress">
           <p>Ваш комментарий добавляется...</p>
         </div>`;
-    }
+
