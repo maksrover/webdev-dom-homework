@@ -4,6 +4,7 @@ import { format } from './date-fns';
 
 
 
+
 export { renderComments, renderForms };
 
 
@@ -62,4 +63,4 @@ function renderComments({ comments }) {
         <div class="add-form-progress">
           <p>Ваш комментарий добавляется...</p>
         </div>`;
-    }
+

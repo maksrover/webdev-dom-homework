@@ -1,4 +1,4 @@
-import { getComments } from "./api.js";
+import { getComments, registration, userName } from "./api.js";
 import { renderComments, renderForms } from "./render.js";
 import { checkInput, addComment, initLoaderComments } from "./renderComments.js";
 import { initRenderLoginForm } from "./renderLogin.js";
@@ -25,8 +25,8 @@ fetchAndRenderComments();
 
 initRenderLoginForm();
 
+
 function globalAdd() {  
-    
     renderForms();
 
     const buttonElement = document.querySelector('button[class="add-form-button"]');
@@ -42,4 +42,3 @@ function globalAdd() {
 }
 
 export { fetchAndRenderComments, globalAdd };
-
