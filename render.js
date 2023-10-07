@@ -1,6 +1,6 @@
 import { appComment, appFormElement  } from "./ui.js";
 import { initLikeComments, initReplyComment, deleteComment } from "./renderComments.js";
-import { format } from './date-fns';
+import { format } from 'date-fns';
 
 
 export { renderComments, renderForms };
@@ -10,7 +10,7 @@ function renderComments({ comments }) {
   const commentsHTML = comments
     .map((comment, ind) => {
       const currentDate = new Date();
-      const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss'); 
+      const formattedDate = format(currentDate, 'yyyy-MM-dd HH.mm.ss');
       return `
           <li data-index="${comment.id}" class="comment">
               <div class="comment-header">
