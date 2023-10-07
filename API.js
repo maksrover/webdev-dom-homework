@@ -1,51 +1,105 @@
-const API_ENDPOINT = "https://wedev-api.sky.pro/api/v1/atamyrat-isayev/comments";
+const baseUrl = 'https://wedev-api.sky.pro/api/v2/:atamyrat-isayev';
+const userUrl = 'https://wedev-api.sky.pro/api/user';
 
-export async function fetchComments() {
-  try {
-    const response = await fetch(API_ENDPOINT);
+export let token;
+export const setToken = (newToken) => {
+  token = newToken
+};
 
-    if (response.status === 500) {
-      throw new Error("Server is down, please try again later");
-    }
+export let userName;
+export const setUserName = (newUserName) => {
+  userName = newUserName
+};
 
-    const comments = await response.json();
-    return comments.comments;
-  } catch (error) {
-    throw error;
-  }
+
+export async function getComments() {
+    return fetch(`${baseUrl}/comments`,     
+    {
+      method: "GET",
+    })
+    .then((response) => {
+      return response.json();
+    })
 }
 
-export async function postComment(newComment) {
-  try {
-    const response = await fetch(API_ENDPOINT, {
+export async function postApi({ name, text }) {
+    return fetch(`${baseUrl}/comments`,      
+    {
       method: "POST",
-      body: JSON.stringify(newComment),
-    });
-
-    if (response.status === 400) {
-      throw new Error("Имя и комментарий должны быть не короче 3 символов");
-    } else if (response.status === 500) {
-      throw new Error("Сервер сломался, попробуйте позже");
-    } else if (!response.ok) {
-      throw new Error(`Error adding comment: ${response.status}`);
-    }
-
-    return response.json();
-  } catch (error) {
-    throw error;
-  }
+      body: JSON.stringify({
+        name: name
+              .replaceAll("&", "&amp;")
+              .replaceAll("<", "&lt;")
+              .replaceAll(">", "&gt;")
+              .replaceAll('"', "&quot;"),
+        text: text
+              .replaceAll("&", "&amp;")
+              .replaceAll("<", "&lt;")
+              .replaceAll(">", "&gt;")
+              .replaceAll('"', "&quot;"),
+        isLiked:	false,
+        likes: 0,
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      if (response.status === 500) {
+        throw new Error("Сервер сломался");
+      }
+      if (response.status === 400) {
+        throw new Error("Плохой запрос");
+      }
+      return response.json();
+    })
 }
 
-export async function deleteComment(commentId) {
-  try {
-    const response = await fetch(`${API_ENDPOINT}/${commentId}`, {
-      method: "DELETE",
-    });
+export async function login({login, password}) {
+  return fetch(`${userUrl}/login`, {
+    method: "POST",
+    body: JSON.stringify({
+      login,
+      password,
+    }),
+  })
+  .then((response) => {
+    if (response.status === 400) {
+      throw new Error("Плохой запрос");
+    };
+    return response.json();
+  });
+}
 
-    if (!response.ok) {
-      throw new Error(`Error deleting comment: ${response.status}`);
+export async function registration({login, name, password}) {
+  return fetch(userUrl, {
+    method: "POST",
+    body: JSON.stringify({
+      login,
+      name,
+      password,
+    }),
+  })
+  .then((response) => {
+    if (response.status === 400) {
+      throw new Error("Плохой запрос");
+    };
+    return response.json();
+  });
+  
+}
+
+export async function deleteCommentApi({ id }) {
+  return fetch(`${baseUrl}/comments/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },    
+  })
+  .then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
     }
-  } catch (error) {
-    throw error;
-  }
+    return response.json();
+  });
 }
