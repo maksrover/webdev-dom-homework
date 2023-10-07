@@ -3,8 +3,6 @@ import { initLikeComments, initReplyComment, deleteComment } from "./renderComme
 import { format } from './date-fns';
 
 
-
-
 export { renderComments, renderForms };
 
 
